@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh mục sản phẩm - AccountShop</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { font-family: sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+    h1 { color: #38bdf8; text-align: center; }
+    .category-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+    .category-nav button {
+      background: #1e293b; color: #fff; border: 1px solid #334155; padding: 8px 16px;
+      border-radius: 8px; cursor: pointer;
+    }
+    .category-nav button.active { background: #06b6d4; color: #041324; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .product-card { background: #1e293b; border-radius: 10px; padding: 12px; text-align: center; box-shadow: 0 0 8px rgba(0,0,0,0.2); }
+    .product-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; }
+    .product-card h3 { margin: 10px 0 4px; font-size: 16px; }
+    .product-card p { font-size: 14px; color: #94a3b8; }
+    .pagination { text-align: center; margin-top: 20px; }
+    .pagination button { background: #1e293b; color: #fff; border: 1px solid #334155; margin: 0 5px; padding: 6px 10px; border-radius: 5px; }
+    .pagination button.active { background: #06b6d4; color: #041324; }
+  </style>
+</head>
+<body>
+  <h1>Danh mục tài khoản game</h1>
+
+  <div class="category-nav">
+    <button onclick="filterCategory('all')" class="active">Tất cả</button>
+    <button onclick="filterCategory('lienquan')">Liên Quân</button>
+    <button onclick="filterCategory('freefire')">Free Fire</button>
+    <button onclick="filterCategory('lienminh')">Liên Minh Huyền Thoại</button>
+  </div>
+
+  <div id="productGrid" class="product-grid"></div>
+  <div id="pagination" class="pagination"></div>
+
+  <script>
+    const products = [
+      {id:1, name:"Acc Liên Quân VIP", price:250000, img:"img/lq1.jpg", category:"lienquan"},
+      {id:2, name:"Acc Liên Quân Rank Cao", price:180000, img:"img/lq2.jpg", category:"lienquan"},
+      {id:3, name:"Acc Free Fire Giá Rẻ", price:90000, img:"img/ff1.jpg", category:"freefire"},
+      {id:4, name:"Acc Free Fire Full Skin", price:220000, img:"img/ff2.jpg", category:"freefire"},
+      {id:5, name:"Acc Liên Minh Rank Bạc", price:100000, img:"img/lm1.jpg", category:"lienminh"},
+      {id:6, name:"Acc Liên Minh VIP", price:300000, img:"img/lm2.jpg", category:"lienminh"},
+      {id:7, name:"Acc Liên Quân Cao Thủ", price:400000, img:"img/lq3.jpg", category:"lienquan"},
+      {id:8, name:"Acc Free Fire Kim Cương", price:150000, img:"img/ff3.jpg", category:"freefire"},
+    ];
+
+    let currentCategory = "all";
+    let currentPage = 1;
+    const perPage = 4;
+
+    function renderProducts() {
+      const grid = document.getElementById("productGrid");
+      const filtered = currentCategory === "all" ? products : products.filter(p => p.category === currentCategory);
+      const start = (currentPage - 1) * perPage;
+      const paginated = filtered.slice(start, start + perPage);
+
+      grid.innerHTML = paginated.map(p => `
+        <div class="product-card">
+          <img src="${p.img}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>Giá: ${p.price.toLocaleString()} VNĐ</p>
+          <button onclick="viewDetail(${p.id})">Xem chi tiết</button>
+        </div>
+      `).join('');
+
+      renderPagination(filtered.length);
+    }
+
+    function renderPagination(total) {
+      const totalPages = Math.ceil(total / perPage);
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = Array.from({length: totalPages}, (_, i) => i + 1).map(num => `
+        <button class="${num===currentPage?'active':''}" onclick="goToPage(${num})">${num}</button>
+      `).join('');
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderProducts();
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      currentPage = 1;
+      document.querySelectorAll(".category-nav button").forEach(btn => btn.classList.remove("active"));
+      document.querySelector(`.category-nav button[onclick="filterCategory('${cat}')"]`).classList.add("active");
+      renderProducts();
+    }
+
+    function viewDetail(id) {
+      const p = products.find(p => p.id === id);
+      alert(`Chi tiết sản phẩm:\n\n${p.name}\nGiá: ${p.price.toLocaleString()} VNĐ`);
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
