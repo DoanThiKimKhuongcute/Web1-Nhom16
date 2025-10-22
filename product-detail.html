@@ -6,28 +6,74 @@
   <title>Chi tiết sản phẩm | AccountShop</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body { font-family: sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
-    header, footer { text-align: center; margin-bottom: 20px; }
-    nav a { color: #38bdf8; margin: 0 10px; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-    .product-detail { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; align-items: flex-start; }
-    .product-image img { width: 320px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.3); }
-    .product-info { max-width: 400px; }
-    .product-info h2 { color: #38bdf8; margin-top: 0; }
+    body {
+      font-family: sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    header h1 {
+      color: #38bdf8;
+    }
+    nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    nav a:hover {
+      color: #38bdf8;
+    }
+    .product-detail {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 900px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .product-image img {
+      width: 300px;
+      height: 300px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .product-info h2 {
+      color: #38bdf8;
+    }
+    .product-info p {
+      margin: 10px 0;
+    }
     .buy-btn {
       background: #06b6d4;
       color: #041324;
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
-      cursor: pointer;
       font-weight: bold;
-      margin-top: 10px;
+      cursor: pointer;
     }
-    .buy-btn:hover { background: #0891b2; }
+    .buy-btn:hover {
+      background: #0891b2;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #64748b;
+    }
   </style>
 </head>
-<body class="dark">
+<body>
   <header>
     <h1>🎮 AccountShop</h1>
     <nav>
@@ -39,12 +85,12 @@
 
   <main class="product-detail">
     <div class="product-image">
-      <img id="product-img" src="" alt="Sản phẩm">
+      <img src="img/lienquan1.jpg" alt="Tài khoản Liên Quân VIP">
     </div>
     <div class="product-info">
-      <h2 id="product-name"></h2>
-      <p>Giá: <strong id="product-price"></strong></p>
-      <p id="product-desc"></p>
+      <h2>Tài khoản Liên Quân VIP</h2>
+      <p>Giá: <strong>250.000đ</strong></p>
+      <p>Thông tin: Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.</p>
       <button class="buy-btn">Mua ngay</button>
     </div>
   </main>
@@ -52,35 +98,5 @@
   <footer>
     <p>© 2025 AccountShop. All rights reserved.</p>
   </footer>
-
-  <script>
-    // Lấy id sản phẩm từ URL
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
-
-    // Danh sách sản phẩm (phải trùng với products.html)
-    const products = [
-      {id:1, name:"Acc Liên Quân VIP", price:250000, img:"img/lq1.jpg", desc:"Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%."},
-      {id:2, name:"Acc Liên Quân Rank Cao", price:180000, img:"img/lq2.jpg", desc:"Rank Tinh Anh, 100 tướng, nhiều trang phục hiếm."},
-      {id:3, name:"Acc Free Fire Giá Rẻ", price:90000, img:"img/ff1.jpg", desc:"Level cao, có skin súng, pet và nhiều nhân vật."},
-      {id:4, name:"Acc Free Fire Full Skin", price:220000, img:"img/ff2.jpg", desc:"Full skin, pet hiếm, có huy hiệu đấu hạng."},
-      {id:5, name:"Acc Liên Minh Rank Bạc", price:100000, img:"img/lm1.jpg", desc:"Rank Bạc II, hơn 60 tướng, nhiều biểu cảm."},
-      {id:6, name:"Acc Liên Minh VIP", price:300000, img:"img/lm2.jpg", desc:"Rank Kim Cương, hơn 120 tướng, nhiều skin SSS."},
-      {id:7, name:"Acc Liên Quân Cao Thủ", price:400000, img:"img/lq3.jpg", desc:"Rank Cao Thủ, full tướng, 200 skin cực hiếm."},
-      {id:8, name:"Acc Free Fire Kim Cương", price:150000, img:"img/ff3.jpg", desc:"Rank Kim Cương, có nhiều skin súng và đồ hiếm."},
-    ];
-
-    // Tìm sản phẩm theo id
-    const product = products.find(p => p.id === id);
-
-    if (product) {
-      document.getElementById("product-img").src = product.img;
-      document.getElementById("product-name").textContent = product.name;
-      document.getElementById("product-price").textContent = product.price.toLocaleString() + "đ";
-      document.getElementById("product-desc").textContent = product.desc;
-    } else {
-      document.querySelector(".product-detail").innerHTML = "<p>Sản phẩm không tồn tại!</p>";
-    }
-  </script>
 </body>
 </html>
