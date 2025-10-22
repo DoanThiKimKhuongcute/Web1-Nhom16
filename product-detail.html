@@ -9,11 +9,7 @@
     body { font-family: Arial, sans-serif; margin: 30px; background-color: #f9f9f9; color: #222; }
     header { text-align: center; }
     header h1 { color: #333; }
-    nav a {
-      margin: 0 10px;
-      color: #007bff;
-      text-decoration: none;
-    }
+    nav a { margin: 0 10px; color: #007bff; text-decoration: none; }
     .product-info {
       max-width: 600px;
       margin: 40px auto;
@@ -22,11 +18,7 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .product-info img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
+    .product-info img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
     .product-info h2 { color: #000; }
     .product-info button {
       background: #007bff;
@@ -67,38 +59,21 @@
     const id = params.get("id");
 
     const products = {
-      1: {
-        name: "Tài khoản Liên Quân VIP",
-        price: "250.000đ",
-        desc: "Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.",
-        img: "images/lienquan1.jpg"
-      },
-      2: {
-        name: "Tài khoản Liên Quân Rank Cao",
-        price: "180.000đ",
-        desc: "Rank Tinh Anh, 120 tướng, 80 skin, winrate 60%.",
-        img: "images/lienquan2.jpg"
-      },
-      3: {
-        name: "Tài khoản Free Fire Giá Rẻ",
-        price: "90.000đ",
-        desc: "Level 60, có 30 súng và 15 skin hiếm.",
-        img: "images/freefire1.jpg"
-      },
-      4: {
-        name: "Tài khoản Free Fire Full Skin",
-        price: "220.000đ",
-        desc: "Full skin, 100 súng, 50 nhân vật, nhiều đồ hiếm.",
-        img: "images/freefire2.jpg"
-      }
+      1: { name: "Tài khoản Liên Quân VIP", price: "250.000đ", desc: "Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.", img: "images/lienquan1.jpg" },
+      2: { name: "Tài khoản Liên Quân Rank Cao", price: "180.000đ", desc: "Rank Tinh Anh, 120 tướng, 80 skin, winrate 60%.", img: "images/lienquan2.jpg" },
+      3: { name: "Tài khoản Free Fire Giá Rẻ", price: "90.000đ", desc: "Level 60, có 30 súng và 15 skin hiếm.", img: "images/freefire1.jpg" },
+      4: { name: "Tài khoản Free Fire Full Skin", price: "220.000đ", desc: "Full skin, 100 súng, 50 nhân vật, nhiều đồ hiếm.", img: "images/freefire2.jpg" }
     };
 
-    const p = products[id] || products[1];
-    document.getElementById("product-img").src = p.img;
-    document.getElementById("product-name").textContent = p.name;
-    document.getElementById("product-price").textContent = "Giá: " + p.price;
-    document.getElementById("product-desc").textContent = "Thông tin: " + p.desc;
+    const p = products[id];
+    if (p) {
+      document.getElementById("product-img").src = p.img;
+      document.getElementById("product-name").textContent = p.name;
+      document.getElementById("product-price").textContent = "Giá: " + p.price;
+      document.getElementById("product-desc").textContent = "Thông tin: " + p.desc;
+    } else {
+      document.body.innerHTML = "<h2 style='text-align:center;color:red'>❌ Sản phẩm không tồn tại!</h2>";
+    }
   </script>
-
 </body>
 </html>
