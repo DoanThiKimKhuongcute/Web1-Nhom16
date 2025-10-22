@@ -61,10 +61,11 @@
 
       grid.innerHTML = paginated.map(p => `
         <div class="product-card">
-          <img src="${p.img}" alt="${p.name}">
-          <h3>${p.name}</h3>
-          <p>Giá: ${p.price.toLocaleString()} VNĐ</p>
-          <button onclick="viewDetail(${p.id})">Xem chi tiết</button>
+          <a href="product-detail.html?id=${p.id}">
+            <img src="${p.img}" alt="${p.name}">
+            <h3>${p.name}</h3>
+          </a>
+          <p>Giá: ${p.price.toLocaleString()}đ</p>
         </div>
       `).join('');
 
@@ -90,11 +91,6 @@
       document.querySelectorAll(".category-nav button").forEach(btn => btn.classList.remove("active"));
       document.querySelector(`.category-nav button[onclick="filterCategory('${cat}')"]`).classList.add("active");
       renderProducts();
-    }
-
-    function viewDetail(id) {
-      const p = products.find(p => p.id === id);
-      alert(`Chi tiết sản phẩm:\n\n${p.name}\nGiá: ${p.price.toLocaleString()} VNĐ`);
     }
 
     renderProducts();
