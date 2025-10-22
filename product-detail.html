@@ -3,100 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chi tiết sản phẩm | AccountShop</title>
+  <title>AccountShop | Chi tiết sản phẩm</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body {
-      font-family: sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      margin: 0;
-      padding: 20px;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-    header h1 {
-      color: #38bdf8;
-    }
+    body { font-family: Arial, sans-serif; margin: 30px; background-color: #f9f9f9; color: #222; }
+    header { text-align: center; }
+    header h1 { color: #333; }
     nav a {
-      color: #94a3b8;
-      text-decoration: none;
       margin: 0 10px;
+      color: #007bff;
+      text-decoration: none;
     }
-    nav a:hover {
-      color: #38bdf8;
-    }
-    .product-detail {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 30px;
-      background: #1e293b;
+    .product-info {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
       padding: 20px;
       border-radius: 10px;
-      max-width: 900px;
-      margin: 0 auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .product-image img {
-      width: 300px;
-      height: 300px;
+    .product-info img {
+      width: 100%;
       border-radius: 10px;
-      object-fit: cover;
+      margin-bottom: 15px;
     }
-    .product-info h2 {
-      color: #38bdf8;
-    }
-    .product-info p {
-      margin: 10px 0;
-    }
-    .buy-btn {
-      background: #06b6d4;
-      color: #041324;
+    .product-info h2 { color: #000; }
+    .product-info button {
+      background: #007bff;
+      color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
+      border-radius: 5px;
+      padding: 10px 15px;
       cursor: pointer;
     }
-    .buy-btn:hover {
-      background: #0891b2;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #64748b;
-    }
+    footer { text-align: center; margin-top: 30px; color: #555; }
   </style>
 </head>
 <body>
+
   <header>
     <h1>🎮 AccountShop</h1>
     <nav>
       <a href="index.html">Trang chủ</a>
       <a href="products.html">Sản phẩm</a>
-      <a href="#">Liên hệ</a>
+      <a href="contact.html">Liên hệ</a>
     </nav>
   </header>
 
-  <main class="product-detail">
-    <div class="product-image">
-      <img src="img/lienquan1.jpg" alt="Tài khoản Liên Quân VIP">
-    </div>
-    <div class="product-info">
-      <h2>Tài khoản Liên Quân VIP</h2>
-      <p>Giá: <strong>250.000đ</strong></p>
-      <p>Thông tin: Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.</p>
-      <button class="buy-btn">Mua ngay</button>
-    </div>
-  </main>
+  <div class="product-info">
+    <img id="product-img" src="" alt="">
+    <h2 id="product-name"></h2>
+    <p><strong id="product-price"></strong></p>
+    <p id="product-desc"></p>
+    <button>Mua ngay</button>
+  </div>
 
   <footer>
     <p>© 2025 AccountShop. All rights reserved.</p>
   </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const products = {
+      1: {
+        name: "Tài khoản Liên Quân VIP",
+        price: "250.000đ",
+        desc: "Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.",
+        img: "images/lienquan1.jpg"
+      },
+      2: {
+        name: "Tài khoản Liên Quân Rank Cao",
+        price: "180.000đ",
+        desc: "Rank Tinh Anh, 120 tướng, 80 skin, winrate 60%.",
+        img: "images/lienquan2.jpg"
+      },
+      3: {
+        name: "Tài khoản Free Fire Giá Rẻ",
+        price: "90.000đ",
+        desc: "Level 60, có 30 súng và 15 skin hiếm.",
+        img: "images/freefire1.jpg"
+      },
+      4: {
+        name: "Tài khoản Free Fire Full Skin",
+        price: "220.000đ",
+        desc: "Full skin, 100 súng, 50 nhân vật, nhiều đồ hiếm.",
+        img: "images/freefire2.jpg"
+      }
+    };
+
+    const p = products[id] || products[1];
+    document.getElementById("product-img").src = p.img;
+    document.getElementById("product-name").textContent = p.name;
+    document.getElementById("product-price").textContent = "Giá: " + p.price;
+    document.getElementById("product-desc").textContent = "Thông tin: " + p.desc;
+  </script>
+
 </body>
 </html>
