@@ -6,94 +6,152 @@
   <title>AccountShop | Sản phẩm</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 30px; background-color: #f9f9f9; color: #222; }
-    header { text-align: center; }
-    header h1 { color: #333; }
-    nav a {
-      margin: 0 10px;
-      color: #007bff;
-      text-decoration: none;
+    body { background-color: #0f172a; color: #e2e8f0; font-family: Arial, sans-serif; }
+    h1 { text-align: center; color: #38bdf8; margin-top: 30px; }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
     }
-    .product-list {
+
+    .filter-buttons button {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: white;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    .filter-buttons button.active { background: #06b6d4; color: #041324; }
+
+    .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
-      margin-top: 40px;
+      width: 85%;
+      margin: auto;
     }
+
     .product {
-      background: #fff;
-      padding: 15px;
+      background-color: #1e293b;
       border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      padding: 15px;
       text-align: center;
+      transition: 0.3s;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
     }
+
+    .product:hover { transform: scale(1.05); }
+
     .product img {
       width: 100%;
       border-radius: 10px;
+      height: 160px;
+      object-fit: cover;
     }
-    .product h3 {
-      margin: 10px 0 5px;
-      color: #000;
-    }
-    .product p {
-      color: #555;
-    }
-    .product a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #007bff;
-      color: #fff;
-      border-radius: 5px;
+
+    .product h3 a {
+      color: #38bdf8;
       text-decoration: none;
     }
-    footer { text-align: center; margin-top: 40px; color: #555; }
+
+    .product p { color: #94a3b8; }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .pagination button {
+      border: none;
+      background: #1e293b;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .pagination button.active { background: #06b6d4; color: #041324; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎮 AccountShop</h1>
-    <nav>
-      <a href="index.html">Trang chủ</a>
-      <a href="products.html">Sản phẩm</a>
-      <a href="contact.html">Liên hệ</a>
-    </nav>
-  </header>
 
-  <main>
-    <div class="product-list">
-      <div class="product">
-        <img src="images/lienquan1.jpg" alt="Liên Quân VIP">
-        <h3>Tài khoản Liên Quân VIP</h3>
-        <p>Giá: <strong>250.000đ</strong></p>
-        <a href="product-detail.html?id=1">Xem chi tiết</a>
-      </div>
+  <h1>Danh mục tài khoản game</h1>
 
-      <div class="product">
-        <img src="images/lienquan2.jpg" alt="Liên Quân Rank Cao">
-        <h3>Tài khoản Liên Quân Rank Cao</h3>
-        <p>Giá: <strong>180.000đ</strong></p>
-        <a href="product-detail.html?id=2">Xem chi tiết</a>
-      </div>
+  <div class="filter-buttons">
+    <button class="active" onclick="filterCategory('all')">Tất cả</button>
+    <button onclick="filterCategory('lienquan')">Liên Quân</button>
+    <button onclick="filterCategory('freefire')">Free Fire</button>
+    <button onclick="filterCategory('lienminh')">Liên Minh Huyền Thoại</button>
+  </div>
 
-      <div class="product">
-        <img src="images/freefire1.jpg" alt="Free Fire Giá Rẻ">
-        <h3>Tài khoản Free Fire Giá Rẻ</h3>
-        <p>Giá: <strong>90.000đ</strong></p>
-        <a href="product-detail.html?id=3">Xem chi tiết</a>
-      </div>
+  <div class="products" id="productList"></div>
 
-      <div class="product">
-        <img src="images/freefire2.jpg" alt="Free Fire Full Skin">
-        <h3>Tài khoản Free Fire Full Skin</h3>
-        <p>Giá: <strong>220.000đ</strong></p>
-        <a href="product-detail.html?id=4">Xem chi tiết</a>
-      </div>
-    </div>
-  </main>
+  <div class="pagination" id="pagination"></div>
 
-  <footer>
-    <p>© 2025 AccountShop. All rights reserved.</p>
-  </footer>
+  <script>
+    const products = [
+      {id: 1, name: "Acc Liên Quân VIP", price: 250000, img: "images/lienquan1.jpg", category: "lienquan"},
+      {id: 2, name: "Acc Liên Quân Rank Cao", price: 180000, img: "images/lienquan2.jpg", category: "lienquan"},
+      {id: 3, name: "Acc Free Fire Giá Rẻ", price: 90000, img: "images/freefire1.jpg", category: "freefire"},
+      {id: 4, name: "Acc Free Fire Full Skin", price: 220000, img: "images/freefire2.jpg", category: "freefire"},
+      {id: 5, name: "Acc Liên Minh Rank Bạc", price: 100000, img: "images/lienminh1.jpg", category: "lienminh"},
+      {id: 6, name: "Acc Liên Minh VIP", price: 300000, img: "images/lienminh2.jpg", category: "lienminh"}
+    ];
+
+    let currentCategory = "all";
+    let currentPage = 1;
+    const perPage = 4;
+
+    function renderProducts() {
+      const list = document.getElementById("productList");
+      const filtered = currentCategory === "all"
+        ? products
+        : products.filter(p => p.category === currentCategory);
+
+      const start = (currentPage - 1) * perPage;
+      const paginated = filtered.slice(start, start + perPage);
+
+      list.innerHTML = paginated.map(p => `
+        <div class="product">
+          <img src="${p.img}" alt="${p.name}">
+          <h3><a href="product-detail.html?id=${p.id}">${p.name}</a></h3>
+          <p>Giá: ${p.price.toLocaleString()}đ</p>
+        </div>
+      `).join('');
+
+      renderPagination(filtered.length);
+    }
+
+    function renderPagination(total) {
+      const totalPages = Math.ceil(total / perPage);
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = Array.from({ length: totalPages }, (_, i) => i + 1)
+        .map(num => `
+          <button class="${num === currentPage ? 'active' : ''}" onclick="goToPage(${num})">${num}</button>
+        `).join('');
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderProducts();
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      currentPage = 1;
+      document.querySelectorAll(".filter-buttons button").forEach(btn => btn.classList.remove("active"));
+      document.querySelector(`.filter-buttons button[onclick="filterCategory('${cat}')"]`).classList.add("active");
+      renderProducts();
+    }
+
+    renderProducts();
+  </script>
+
 </body>
 </html>
