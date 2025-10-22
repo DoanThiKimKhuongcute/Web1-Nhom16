@@ -6,29 +6,42 @@
   <title>AccountShop | Chi tiết sản phẩm</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 30px; background-color: #f9f9f9; color: #222; }
-    header { text-align: center; }
-    header h1 { color: #333; }
-    nav a { margin: 0 10px; color: #007bff; text-decoration: none; }
-    .product-info {
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    body { background-color: #0f172a; color: #e2e8f0; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header { text-align: center; padding: 20px; background: #1e293b; }
+    header h1 { color: #38bdf8; }
+    nav a {
+      margin: 0 10px;
+      color: #e2e8f0;
+      text-decoration: none;
     }
-    .product-info img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
-    .product-info h2 { color: #000; }
-    .product-info button {
-      background: #007bff;
-      color: white;
+    nav a:hover { color: #38bdf8; }
+    .product-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .product-detail img {
+      width: 320px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .product-detail h2 { color: #38bdf8; margin-top: 20px; }
+    .product-detail p { color: #94a3b8; margin: 8px 0; font-size: 16px; }
+    .product-detail button {
+      background: #06b6d4;
+      color: #041324;
       border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
+      border-radius: 6px;
+      padding: 10px 16px;
+      margin-top: 15px;
+      font-weight: bold;
       cursor: pointer;
     }
-    footer { text-align: center; margin-top: 30px; color: #555; }
+    .product-detail button:hover { background: #0ea5e9; }
+    footer { text-align: center; padding: 15px; background: #1e293b; color: #94a3b8; margin-top: 40px; }
   </style>
 </head>
 <body>
@@ -42,13 +55,13 @@
     </nav>
   </header>
 
-  <div class="product-info">
+  <main class="product-detail">
     <img id="product-img" src="" alt="">
     <h2 id="product-name"></h2>
-    <p><strong id="product-price"></strong></p>
+    <p id="product-price"></p>
     <p id="product-desc"></p>
     <button>Mua ngay</button>
-  </div>
+  </main>
 
   <footer>
     <p>© 2025 AccountShop. All rights reserved.</p>
@@ -59,21 +72,20 @@
     const id = params.get("id");
 
     const products = {
-      1: { name: "Tài khoản Liên Quân VIP", price: "250.000đ", desc: "Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.", img: "images/lienquan1.jpg" },
-      2: { name: "Tài khoản Liên Quân Rank Cao", price: "180.000đ", desc: "Rank Tinh Anh, 120 tướng, 80 skin, winrate 60%.", img: "images/lienquan2.jpg" },
-      3: { name: "Tài khoản Free Fire Giá Rẻ", price: "90.000đ", desc: "Level 60, có 30 súng và 15 skin hiếm.", img: "images/freefire1.jpg" },
-      4: { name: "Tài khoản Free Fire Full Skin", price: "220.000đ", desc: "Full skin, 100 súng, 50 nhân vật, nhiều đồ hiếm.", img: "images/freefire2.jpg" }
+      1: { name: "Acc Liên Quân VIP", price: "250.000đ", desc: "Rank Cao Thủ, 150 tướng, 120 skin, winrate 70%.", img: "images/lienquan1.jpg" },
+      2: { name: "Acc Liên Quân Rank Cao", price: "180.000đ", desc: "Rank Tinh Anh, 120 tướng, 80 skin, winrate 60%.", img: "images/lienquan2.jpg" },
+      3: { name: "Acc Free Fire Giá Rẻ", price: "90.000đ", desc: "Level 60, có 30 súng và 15 skin hiếm.", img: "images/freefire1.jpg" },
+      4: { name: "Acc Free Fire Full Skin", price: "220.000đ", desc: "Full skin, 100 súng, 50 nhân vật, nhiều đồ hiếm.", img: "images/freefire2.jpg" },
+      5: { name: "Acc Liên Minh Rank Bạc", price: "100.000đ", desc: "Rank Bạc, 90 tướng, vài skin hiếm, acc ổn định.", img: "images/lienminh1.jpg" },
+      6: { name: "Acc Liên Minh VIP", price: "300.000đ", desc: "Rank Cao, 160 tướng, 120 skin, nhiều khung hiếm.", img: "images/lienminh2.jpg" }
     };
 
-    const p = products[id];
-    if (p) {
-      document.getElementById("product-img").src = p.img;
-      document.getElementById("product-name").textContent = p.name;
-      document.getElementById("product-price").textContent = "Giá: " + p.price;
-      document.getElementById("product-desc").textContent = "Thông tin: " + p.desc;
-    } else {
-      document.body.innerHTML = "<h2 style='text-align:center;color:red'>❌ Sản phẩm không tồn tại!</h2>";
-    }
+    const p = products[id] || products[1];
+    document.getElementById("product-img").src = p.img;
+    document.getElementById("product-name").textContent = p.name;
+    document.getElementById("product-price").textContent = "Giá: " + p.price;
+    document.getElementById("product-desc").textContent = "Thông tin: " + p.desc;
   </script>
+
 </body>
 </html>
