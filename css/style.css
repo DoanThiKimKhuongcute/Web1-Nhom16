@@ -1,41 +1,35 @@
-/* ========== GIAO DIỆN CHUNG ========== */
-body.dark {
-  background-color: #0f172a;
-  color: #e2e8f0;
+body {
   font-family: Arial, sans-serif;
-  margin: 0;
+  background-color: #f8f8f8;
+  padding: 30px;
+  color: #222;
 }
-
-header {
-  text-align: center;
-  background: #1e293b;
-  padding: 20px 0;
+h2 {
+  color: #333;
 }
-
-header h1 {
-  color: #38bdf8;
-  margin: 0;
+.form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  margin: auto;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
-
-nav {
-  margin-top: 10px;
+input {
+  width: 100%;
+  margin: 6px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-
-nav a {
-  color: #e2e8f0;
-  text-decoration: none;
-  margin: 0 10px;
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
-nav a:hover {
-  color: #38bdf8;
-}
-
-footer {
-  text-align: center;
-  background: #1e293b;
-  color: #94a3b8;
-  padding: 15px;
-  margin-top: 30px;
-  font-size: 14px;
+button:hover {
+  background: #0056b3;
 }
